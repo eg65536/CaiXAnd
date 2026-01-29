@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.CaiXin" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- 主色调 -->
+    <style name="Theme.CaiXin" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color -->
         <item name="colorPrimary">@color/caixin_primary</item>
-        <item name="colorPrimaryDark">@color/caixin_primary_dark</item>
-        <item name="colorAccent">@color/caixin_accent</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/caixin_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/caixin_on_primary_container</item>
 
-        <!-- 状态栏颜色 -->
-        <item name="android:statusBarColor">@color/status_bar_color</item>
+        <!-- Secondary brand color -->
+        <item name="colorSecondary">@color/caixin_secondary</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondaryContainer">@color/caixin_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/caixin_on_secondary_container</item>
 
-        <!-- 背景色 -->
-        <item name="android:windowBackground">@color/white</item>
+        <!-- Status bar -->
+        <item name="android:statusBarColor">@color/caixin_primary</item>
+        <item name="android:navigationBarColor">@color/surface</item>
+
+        <!-- Surface colors -->
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+        <item name="colorSurfaceVariant">@color/surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/on_surface_variant</item>
+
+        <!-- Background -->
+        <item name="android:windowBackground">@color/surface</item>
     </style>
 
 </resources>

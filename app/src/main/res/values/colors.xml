@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- 财新品牌色 - 蓝色系 -->
-    <color name="caixin_primary">#1976D2</color>
-    <color name="caixin_primary_dark">#1565C0</color>
-    <color name="caixin_accent">#2196F3</color>
+    <!-- Primary colors - 财新蓝 -->
+    <color name="caixin_primary">#1565C0</color>
+    <color name="caixin_primary_container">#D1E4FF</color>
+    <color name="caixin_on_primary_container">#001D36</color>
 
-    <!-- 基础颜色 -->
+    <!-- Secondary colors -->
+    <color name="caixin_secondary">#535F70</color>
+    <color name="caixin_secondary_container">#D7E3F7</color>
+    <color name="caixin_on_secondary_container">#101C2B</color>
+
+    <!-- Surface colors -->
+    <color name="surface">#FDFCFF</color>
+    <color name="on_surface">#1A1C1E</color>
+    <color name="surface_variant">#DFE2EB</color>
+    <color name="on_surface_variant">#43474E</color>
+
+    <!-- Basic colors -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="gray_light">#F5F5F5</color>
-    <color name="gray">#9E9E9E</color>
-    <color name="gray_dark">#616161</color>
 
-    <!-- 状态栏颜色 -->
-    <color name="status_bar_color">#1565C0</color>
+    <!-- Navigation bar colors -->
+    <color name="nav_selected">#1565C0</color>
+    <color name="nav_unselected">#79747E</color>
 </resources>

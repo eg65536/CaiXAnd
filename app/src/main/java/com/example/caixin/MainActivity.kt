@@ -1,186 +1,107 @@
 package com.example.caixin
 
-import android.annotation.SuppressLint
-import android.content.Intent
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
-import android.view.KeyEvent
-import android.view.View
-import android.webkit.CookieManager
-import android.webkit.WebChromeClient
-import android.webkit.WebResourceRequest
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
-import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.core.view.WindowCompat
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var webView: WebView
-    private lateinit var progressBar: ProgressBar
-    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var bottomNavigation: BottomNavigationView
 
-    companion object {
-        private const val CAIXIN_URL = "https://m.caixin.com/"
-        private const val CAIXIN_HOST = "caixin.com"
-    }
+    // 缓存 Fragment 实例，避免重复创建
+    private val feedFragment by lazy { FeedFragment.newInstance() }
+    private val weeklyFragment by lazy { WeeklyFragment.newInstance() }
+    private val categoryFragment by lazy { CategoryFragment.newInstance() }
+    private val profileFragment by lazy { ProfileFragment.newInstance() }
+
+    private var activeFragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 设置边到边显示
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+
         setContentView(R.layout.activity_main)
 
         initViews()
-        setupWebView()
-        setupSwipeRefresh()
+        setupBottomNavigation()
 
-        // 加载财新网
-        webView.loadUrl(CAIXIN_URL)
+        // 默认显示资讯 Fragment
+        if (savedInstanceState == null) {
+            showFragment(feedFragment)
+        }
     }
 
     private fun initViews() {
-        webView = findViewById(R.id.webView)
-        progressBar = findViewById(R.id.progressBar)
-        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
+        bottomNavigation = findViewById(R.id.bottom_navigation)
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
-    private fun setupWebView() {
-        webView.settings.apply {
-            // 启用 JavaScript
-            javaScriptEnabled = true
-
-            // 启用 DOM 存储
-            domStorageEnabled = true
-
-            // 启用数据库
-            databaseEnabled = true
-
-            // 设置缓存模式
-            cacheMode = WebSettings.LOAD_DEFAULT
-
-            // 支持缩放
-            setSupportZoom(true)
-            builtInZoomControls = true
-            displayZoomControls = false
-
-            // 自适应屏幕
-            useWideViewPort = true
-            loadWithOverviewMode = true
-
-            // 允许混合内容 (HTTPS 页面加载 HTTP 资源)
-            mixedContentMode = WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE
-
-            // 设置 User Agent，模拟移动端浏览器
-            userAgentString = userAgentString + " CaiXinApp/1.0"
-
-            // 允许文件访问
-            allowFileAccess = true
-            allowContentAccess = true
-
-            // 启用地理定位
-            setGeolocationEnabled(true)
-
-            // 媒体播放不需要用户手势
-            mediaPlaybackRequiresUserGesture = false
-        }
-
-        // 启用 Cookie
-        CookieManager.getInstance().apply {
-            setAcceptCookie(true)
-            setAcceptThirdPartyCookies(webView, true)
-        }
-
-        // 设置 WebViewClient
-        webView.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(
-                view: WebView?,
-                request: WebResourceRequest?
-            ): Boolean {
-                val url = request?.url?.toString() ?: return false
-
-                // 如果是财新网域名，在 WebView 内打开
-                if (url.contains(CAIXIN_HOST)) {
-                    return false
+    private fun setupBottomNavigation() {
+        bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_feed -> {
+                    showFragment(feedFragment)
+                    true
                 }
-
-                // 其他链接使用外部浏览器打开
-                try {
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                    startActivity(intent)
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                R.id.nav_weekly -> {
+                    showFragment(weeklyFragment)
+                    true
                 }
-                return true
-            }
-
-            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                super.onPageStarted(view, url, favicon)
-                progressBar.visibility = View.VISIBLE
-            }
-
-            override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-                progressBar.visibility = View.GONE
-                swipeRefreshLayout.isRefreshing = false
-            }
-        }
-
-        // 设置 WebChromeClient 用于处理进度和其他 Chrome 功能
-        webView.webChromeClient = object : WebChromeClient() {
-            override fun onProgressChanged(view: WebView?, newProgress: Int) {
-                super.onProgressChanged(view, newProgress)
-                progressBar.progress = newProgress
-                if (newProgress == 100) {
-                    progressBar.visibility = View.GONE
+                R.id.nav_category -> {
+                    showFragment(categoryFragment)
+                    true
                 }
+                R.id.nav_profile -> {
+                    showFragment(profileFragment)
+                    true
+                }
+                else -> false
             }
         }
     }
 
-    private fun setupSwipeRefresh() {
-        swipeRefreshLayout.setOnRefreshListener {
-            webView.reload()
+    private fun showFragment(fragment: Fragment) {
+        if (activeFragment === fragment) return
+
+        val transaction = supportFragmentManager.beginTransaction()
+
+        // 隐藏当前活动的 Fragment
+        activeFragment?.let {
+            transaction.hide(it)
         }
 
-        // 设置刷新指示器颜色
-        swipeRefreshLayout.setColorSchemeResources(
-            android.R.color.holo_blue_bright,
-            android.R.color.holo_green_light,
-            android.R.color.holo_orange_light,
-            android.R.color.holo_red_light
-        )
-    }
-
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        // 处理返回键，如果 WebView 可以返回，则返回上一页
-        if (keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()) {
-            webView.goBack()
-            return true
+        // 如果 Fragment 尚未添加，则添加它
+        if (!fragment.isAdded) {
+            transaction.add(R.id.fragment_container, fragment)
+        } else {
+            // 否则显示它
+            transaction.show(fragment)
         }
-        return super.onKeyDown(keyCode, event)
+
+        transaction.commit()
+        activeFragment = fragment
     }
 
-    override fun onResume() {
-        super.onResume()
-        webView.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        webView.onPause()
-    }
-
-    override fun onDestroy() {
-        // 清理 WebView
-        webView.apply {
-            loadDataWithBaseURL(null, "", "text/html", "utf-8", null)
-            clearHistory()
-            removeAllViews()
-            destroy()
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        // 如果当前 Fragment 是 WebView Fragment 且可以返回，则返回上一页
+        val currentFragment = activeFragment
+        if (currentFragment is BaseWebViewFragment && currentFragment.canGoBack()) {
+            currentFragment.goBack()
+            return
         }
-        super.onDestroy()
+
+        // 如果不在首页，则回到首页
+        if (activeFragment !== feedFragment) {
+            bottomNavigation.selectedItemId = R.id.nav_feed
+            return
+        }
+
+        // 否则执行默认行为
+        @Suppress("DEPRECATION")
+        super.onBackPressed()
     }
 }
