@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.CaiXin" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- 主色调 -->
+        <item name="colorPrimary">@color/caixin_primary</item>
+        <item name="colorPrimaryDark">@color/caixin_primary_dark</item>
+        <item name="colorAccent">@color/caixin_accent</item>
+
+        <!-- 状态栏颜色 -->
+        <item name="android:statusBarColor">@color/status_bar_color</item>
+
+        <!-- 背景色 -->
+        <item name="android:windowBackground">@color/white</item>
+    </style>
+
+</resources>
