@@ -28,7 +28,12 @@ abstract class BaseWebViewFragment : Fragment() {
     private var pendingUrl: String? = null
 
     companion object {
-        private const val CAIXIN_HOST = "caixin.com"
+        // 财新相关域名列表
+        private val CAIXIN_HOSTS = listOf(
+            "caixin.com",
+            "caixinglobal.com",
+            "caixin.global"
+        )
 
         // 桌面版 Chrome User Agent
         private const val DESKTOP_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
@@ -322,7 +327,7 @@ abstract class BaseWebViewFragment : Fragment() {
                 }
 
                 // 财新相关域名在 WebView 内打开
-                if (url.contains(CAIXIN_HOST)) {
+                if (CAIXIN_HOSTS.any { url.contains(it) }) {
                     return false
                 }
 
