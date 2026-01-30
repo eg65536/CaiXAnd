@@ -1,26 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Primary colors - 财新蓝 -->
-    <color name="caixin_primary">#1565C0</color>
-    <color name="caixin_primary_container">#D1E4FF</color>
-    <color name="caixin_on_primary_container">#001D36</color>
+    <color name="caixin_primary">#0D47A1</color>
+    <color name="caixin_on_primary">#FFFFFF</color>
+    <color name="caixin_primary_container">#D4E3FF</color>
+    <color name="caixin_on_primary_container">#001C3A</color>
 
     <!-- Secondary colors -->
-    <color name="caixin_secondary">#535F70</color>
-    <color name="caixin_secondary_container">#D7E3F7</color>
-    <color name="caixin_on_secondary_container">#101C2B</color>
+    <color name="caixin_secondary">#565F71</color>
+    <color name="caixin_on_secondary">#FFFFFF</color>
+    <color name="caixin_secondary_container">#DAE2F9</color>
+    <color name="caixin_on_secondary_container">#131C2B</color>
+
+    <!-- Tertiary colors -->
+    <color name="caixin_tertiary">#705574</color>
+    <color name="caixin_on_tertiary">#FFFFFF</color>
+    <color name="caixin_tertiary_container">#FAD8FD</color>
+    <color name="caixin_on_tertiary_container">#29132E</color>
+
+    <!-- Error colors -->
+    <color name="error">#BA1A1A</color>
+    <color name="on_error">#FFFFFF</color>
+    <color name="error_container">#FFDAD6</color>
+    <color name="on_error_container">#410002</color>
 
     <!-- Surface colors -->
-    <color name="surface">#FDFCFF</color>
-    <color name="on_surface">#1A1C1E</color>
-    <color name="surface_variant">#DFE2EB</color>
-    <color name="on_surface_variant">#43474E</color>
+    <color name="surface">#FDFBFF</color>
+    <color name="on_surface">#1A1B1F</color>
+    <color name="surface_variant">#E1E2EC</color>
+    <color name="on_surface_variant">#44474F</color>
+
+    <!-- Surface container colors -->
+    <color name="surface_container_lowest">#FFFFFF</color>
+    <color name="surface_container_low">#F7F8FC</color>
+    <color name="surface_container">#F1F2F6</color>
+    <color name="surface_container_high">#EBECF1</color>
+    <color name="surface_container_highest">#E5E6EB</color>
+
+    <!-- Outline colors -->
+    <color name="outline">#75777F</color>
+    <color name="outline_variant">#C5C6D0</color>
 
     <!-- Basic colors -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
 
     <!-- Navigation bar colors -->
-    <color name="nav_selected">#1565C0</color>
-    <color name="nav_unselected">#79747E</color>
+    <color name="nav_selected">#0D47A1</color>
+    <color name="nav_unselected">#44474F</color>
+
+    <!-- Inverse colors -->
+    <color name="inverse_surface">#2F3033</color>
+    <color name="inverse_on_surface">#F2F0F4</color>
+    <color name="inverse_primary">#A6C8FF</color>
+
+    <!-- Scrim -->
+    <color name="scrim">#000000</color>
 </resources>

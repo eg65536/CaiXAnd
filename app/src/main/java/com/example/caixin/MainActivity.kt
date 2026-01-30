@@ -1,19 +1,27 @@
 package com.example.caixin
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CategoryFragment.OnChannelClickListener {
 
     private lateinit var bottomNavigation: BottomNavigationView
 
     // 缓存 Fragment 实例，避免重复创建
     private val feedFragment by lazy { FeedFragment.newInstance() }
     private val weeklyFragment by lazy { WeeklyFragment.newInstance() }
-    private val categoryFragment by lazy { CategoryFragment.newInstance() }
+    private val categoryFragment by lazy {
+        CategoryFragment.newInstance().also {
+            it.onChannelClickListener = this
+        }
+    }
     private val profileFragment by lazy { ProfileFragment.newInstance() }
 
     private var activeFragment: Fragment? = null
@@ -21,11 +29,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 设置边到边显示
-        WindowCompat.setDecorFitsSystemWindows(window, true)
+        // 启用边到边显示
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContentView(R.layout.activity_main)
 
+        setupWindowInsets()
         initViews()
         setupBottomNavigation()
 
@@ -35,8 +44,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupWindowInsets() {
+        val rootView = findViewById<View>(android.R.id.content)
+        ViewCompat.setOnApplyWindowInsetsListener(rootView) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.updatePadding(top = insets.top)
+            windowInsets
+        }
+    }
+
     private fun initViews() {
         bottomNavigation = findViewById(R.id.bottom_navigation)
+
+        // 处理底部导航栏的系统栏内边距
+        ViewCompat.setOnApplyWindowInsetsListener(bottomNavigation) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.updatePadding(bottom = insets.bottom)
+            windowInsets
+        }
     }
 
     private fun setupBottomNavigation() {
@@ -67,6 +92,10 @@ class MainActivity : AppCompatActivity() {
         if (activeFragment === fragment) return
 
         val transaction = supportFragmentManager.beginTransaction()
+            .setCustomAnimations(
+                android.R.anim.fade_in,
+                android.R.anim.fade_out
+            )
 
         // 隐藏当前活动的 Fragment
         activeFragment?.let {
@@ -77,7 +106,6 @@ class MainActivity : AppCompatActivity() {
         if (!fragment.isAdded) {
             transaction.add(R.id.fragment_container, fragment)
         } else {
-            // 否则显示它
             transaction.show(fragment)
         }
 
@@ -85,10 +113,18 @@ class MainActivity : AppCompatActivity() {
         activeFragment = fragment
     }
 
+    // 处理分类页面点击事件
+    override fun onChannelClick(channel: CategoryFragment.Channel) {
+        // 切换到首页 Fragment 并加载选中的频道
+        feedFragment.loadUrl(channel.url)
+        bottomNavigation.selectedItemId = R.id.nav_feed
+    }
+
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        // 如果当前 Fragment 是 WebView Fragment 且可以返回，则返回上一页
         val currentFragment = activeFragment
+
+        // 如果当前是 WebView Fragment 且可以返回，则返回上一页
         if (currentFragment is BaseWebViewFragment && currentFragment.canGoBack()) {
             currentFragment.goBack()
             return
@@ -100,7 +136,6 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        // 否则执行默认行为
         @Suppress("DEPRECATION")
         super.onBackPressed()
     }

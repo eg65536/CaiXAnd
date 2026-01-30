@@ -2,12 +2,13 @@ package com.example.caixin
 
 /**
  * 资讯信息流 Fragment
- * 加载财新网移动端首页
+ * 加载财新网首页
  */
 class FeedFragment : BaseWebViewFragment() {
 
     companion object {
-        private const val FEED_URL = "https://m.caixin.com/"
+        // 使用桌面版首页
+        private const val FEED_URL = "https://www.caixin.com/"
 
         fun newInstance(): FeedFragment {
             return FeedFragment()

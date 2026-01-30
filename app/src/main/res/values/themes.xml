@@ -2,7 +2,7 @@
 <resources>
 
     <style name="Theme.CaiXin" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Primary brand color -->
+        <!-- Primary brand color - 财新蓝 -->
         <item name="colorPrimary">@color/caixin_primary</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorPrimaryContainer">@color/caixin_primary_container</item>
@@ -14,18 +14,53 @@
         <item name="colorSecondaryContainer">@color/caixin_secondary_container</item>
         <item name="colorOnSecondaryContainer">@color/caixin_on_secondary_container</item>
 
-        <!-- Status bar -->
-        <item name="android:statusBarColor">@color/caixin_primary</item>
-        <item name="android:navigationBarColor">@color/surface</item>
+        <!-- Tertiary -->
+        <item name="colorTertiary">@color/caixin_tertiary</item>
+        <item name="colorOnTertiary">@color/white</item>
+        <item name="colorTertiaryContainer">@color/caixin_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/caixin_on_tertiary_container</item>
+
+        <!-- Status bar - 透明，边到边显示 -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
 
         <!-- Surface colors -->
         <item name="colorSurface">@color/surface</item>
         <item name="colorOnSurface">@color/on_surface</item>
         <item name="colorSurfaceVariant">@color/surface_variant</item>
         <item name="colorOnSurfaceVariant">@color/on_surface_variant</item>
+        <item name="colorSurfaceContainerLowest">@color/surface_container_lowest</item>
+        <item name="colorSurfaceContainerLow">@color/surface_container_low</item>
+        <item name="colorSurfaceContainer">@color/surface_container</item>
+        <item name="colorSurfaceContainerHigh">@color/surface_container_high</item>
+        <item name="colorSurfaceContainerHighest">@color/surface_container_highest</item>
 
         <!-- Background -->
         <item name="android:windowBackground">@color/surface</item>
+
+        <!-- Outline -->
+        <item name="colorOutline">@color/outline</item>
+        <item name="colorOutlineVariant">@color/outline_variant</item>
+
+        <!-- 底部导航栏样式 -->
+        <item name="bottomNavigationStyle">@style/Widget.CaiXin.BottomNavigationView</item>
+    </style>
+
+    <!-- 自定义底部导航栏样式 -->
+    <style name="Widget.CaiXin.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="backgroundTint">@color/surface_container</item>
+        <item name="itemActiveIndicatorStyle">@style/Widget.CaiXin.BottomNavigationView.ActiveIndicator</item>
+        <item name="itemIconTint">@color/bottom_nav_color</item>
+        <item name="itemTextColor">@color/bottom_nav_color</item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="itemPaddingTop">12dp</item>
+        <item name="itemPaddingBottom">12dp</item>
+    </style>
+
+    <!-- 活跃指示器样式 -->
+    <style name="Widget.CaiXin.BottomNavigationView.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/caixin_primary_container</item>
     </style>
 
 </resources>

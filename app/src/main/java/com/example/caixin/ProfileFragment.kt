@@ -2,12 +2,13 @@ package com.example.caixin
 
 /**
  * 我的/账号 Fragment
- * 加载财新账号设置页面
+ * 加载财新用户中心页面
  */
 class ProfileFragment : BaseWebViewFragment() {
 
     companion object {
-        private const val PROFILE_URL = "https://m.caixin.com/m/user/"
+        // 财新用户中心
+        private const val PROFILE_URL = "https://user.caixin.com/"
 
         fun newInstance(): ProfileFragment {
             return ProfileFragment()

@@ -7,7 +7,8 @@ package com.example.caixin
 class WeeklyFragment : BaseWebViewFragment() {
 
     companion object {
-        private const val WEEKLY_URL = "https://m.caixin.com/weekly/"
+        // 财新周刊独立域名
+        private const val WEEKLY_URL = "https://weekly.caixin.com/"
 
         fun newInstance(): WeeklyFragment {
             return WeeklyFragment()
